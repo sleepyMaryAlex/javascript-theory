@@ -1,4 +1,4 @@
-# Descriptors & property flags
+# ?Descriptors & property flags
 
 _Дескриптор_ – объект, который описывает поведение свойства.
 
