@@ -3,9 +3,11 @@
 JavaScript использует три точки `...` как для `rest`, так и для `spread` операторов. Но эти два оператора не одно и то же.
 
 __Rest vs spread operator. What’s the difference?__
+
 Отличия `spread` или `rest` в том, как и где они используются. `Spread` преобразует массив (объект, строку или другой доступный для итерации элемент) в последовательность значений, а `rest` преобразует последовательность значений в массив.
 
 _Spread:_
+
 ~~~
 const arr = [1, 2, 3]; 
 console.log(...arr); // 1 2 3 
@@ -21,6 +23,7 @@ foo(...[1, 2]);
 ~~~
 
 _Rest:_
+
 ~~~
 function foo(...args) {
   console.log(args); // [ 1, 2, 3, 4 ]
@@ -88,6 +91,7 @@ console.log(merged); // [ 0, 3, 5, 1, 2, 8, 9, 15 ]
 ~~~
 
 __Spread operator for Object concatenation__
+
 Можно объединить объекты при помощи spread:
 
 ~~~

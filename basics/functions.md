@@ -101,6 +101,7 @@ myObject.myMethod([1, 2, 3]);
 #### Конструкторы
 
 __Function declaration & function expression__
+
 Эти функции могут легко создавать объекты.
 
 ~~~
@@ -111,6 +112,7 @@ function Car(color) {
 const redCar = new Car('red');
 console.log(redCar instanceof Car); // => true
 ~~~
+
 __Arrow function__
 
 Следствием отсутствия this является то, что стрелочную функцию нельзя использовать в качестве конструктора.
@@ -128,6 +130,7 @@ const redCar = new Car('red'); // TypeError: Car is not a constructor
 #### Arguments
 
 __Function declaration & function expression__
+
 Внутри тела function declaration и function expression _arguments_ — это специальный массивоподобный объект, содержащий список аргументов, с которыми была вызвана функция.
 ~~~
 function myFunction() {
@@ -138,6 +141,7 @@ myFunction('a', 'b'); // { '0': 'a', '1': 'b' }
 ~~~
 
 __Arrow function__
+
 Опять же (так же, как и с этим значением), объект arguments разрешается лексически: стрелочная функция получает доступ к аргументам из внешней функции.
 
 ~~~
@@ -155,6 +159,7 @@ myRegularFunction('a', 'b'); // { 0: 'a', 1: 'b' }
 #### Неявный возврат
 
 __Function declaration & function expression__
+
 Если return отсутствует или после оператора return нет выражения, function declaration и function expression неявно возвращает undefined:
 ~~~
 function myEmptyFunction() {
@@ -170,6 +175,7 @@ console.log(myEmptyFunction2()); // => undefined
 ~~~
 
 __Arrow function__
+
 Если стрелочная функция содержит одно выражение и вы опускаете фигурные скобки функции, выражение возвращается неявно.
 ~~~
 const increment = (num) => num + 1;
@@ -179,6 +185,7 @@ console.log(increment(41)); // => 42
 #### Методы
 
 __Function declaration & function expression__
+
 В следующем классе Hero метод logName() определяется с помощью function declaration:
 ~~~
 class Hero {
@@ -216,6 +223,7 @@ setTimeout(batman.logName, 1000);
 Но есть лучший способ: стрелка работает как поле класса.
 
 __Arrow function__
+
 Метод, определенный с помощью стрелки, лексически связывает this с экземпляром класса.
 ~~~
 class Hero {
