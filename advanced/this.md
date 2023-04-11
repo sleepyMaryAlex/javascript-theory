@@ -436,7 +436,7 @@ console.log(numbers.sum());
 
 Функция `calculate` определена внутри `sum`, поэтому вы можете ожидать, что `this` — это объект numbers и в `calculate()`. Тем не менее, `calculate()` — это вызов функции, а не метода, и поэтому его `this` — это глобальный объект `window` или `undefined` в `strict mode`. Даже если контекстом внешней функции sum является объект numbers, у него здесь нет власти.
 
-### Call and apply. Example
+### Call, apply and bind. Example
 
 ~~~
 const user = { name: "Mary" };

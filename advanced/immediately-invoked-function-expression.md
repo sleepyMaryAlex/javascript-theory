@@ -1,4 +1,4 @@
-# Immediately invoked function expression (IIFE)
+# ?Immediately invoked function expression (IIFE)
 
 _IIFE (самовызывающаяся функция)_ - это функция, которая выполняется сразу же после того, как она была определена.
 
