@@ -70,7 +70,7 @@ console.log(obj);
 Более того, вы даже можете выполнять вычисления JavaScript, используя имена вычисляемых свойств.
 
 ~~~
-const fruitVar = 'fruit'
+const fruitVar = 'fruit';
 
 const eatables = {
   [fruitVar]: "Apple",
