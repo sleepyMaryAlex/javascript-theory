@@ -104,7 +104,6 @@ const obj = {};
 ```console.log(date.toLocaleString('ar-EG'));```
 Возвращает строку, представляющую объект, специфичную для локали.
 
-```console.log(10..toString(16)); // a```
 ```console.log(countryCanada.toString()); // [object Object]```
 Возвращает строку, представляющую объект.
 
