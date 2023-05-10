@@ -62,7 +62,7 @@ console.log(Number(add(1)(2)(3)(4))); // 10
 console.log(Number(add(5)(9)(-4)(1))); // 11
 ~~~
 
-Второй вариант:
+Or:
 
 ~~~
 function curry(f) {
@@ -121,4 +121,52 @@ function extendedPeriodOutput(period) {
 }
 
 extendedPeriodOutput(100);
+~~~
+
+***
+
+Check objects for identity
+
+~~~
+const first = {
+  name: "John",
+  address: {
+    country: "Poland",
+    city: "Gdansk",
+  },
+};
+
+const second = {
+  name: "John",
+  address: {
+    country: "Poland",
+    city: "Gdansk",
+  },
+};
+
+function isEqual(object1, object2) {
+  const props1 = Object.getOwnPropertyNames(object1);
+  const props2 = Object.getOwnPropertyNames(object2);
+
+  if (props1.length !== props2.length) {
+    return false;
+  }
+
+  for (let i = 0; i < props1.length; i++) {
+    const prop = props1[i];
+    const bothAreObjects =
+      typeof object1[prop] === "object" && typeof object2[prop] === "object";
+
+    if (
+      (!bothAreObjects && object1[prop] !== object2[prop]) ||
+      (bothAreObjects && !isEqual(object1[prop], object2[prop]))
+    ) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+console.log(isEqual(first, second)); // true
 ~~~

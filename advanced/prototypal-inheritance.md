@@ -458,11 +458,29 @@ function Rabbit() {}
 
 // Не перезаписываем Rabbit.prototype полностью,
 // а добавляем к нему свойство
-Rabbit.prototype.jumps = true
+Rabbit.prototype.jumps = true;
 
 const rabbit = new Rabbit();
 console.log(rabbit.constructor === Rabbit); // true
 // Прототип по умолчанию сохраняется, и мы всё ещё имеем доступ к Rabbit.prototype.constructor
+~~~
+
+Аналогичный пример с классом:
+
+~~~
+class User {
+  constructor(name) {
+    this.name = name;
+  }
+}
+
+User.prototype.greet = function () {
+  console.log(this.name);
+};
+
+const mary = new User("Mary");
+console.log(mary.constructor === User); // true
+mary.greet(); // Mary
 ~~~
 
 Или мы можем заново создать свойство `constructor`:
@@ -481,7 +499,7 @@ console.log(rabbit.constructor === Rabbit); // true
 // теперь свойство constructor снова корректное, так как мы добавили его
 ~~~
 
-Каждый `prototype` это независимый объект с определенным набором свойств и методов.
+Так как по умолчанию `prototype` это объект, то два `prototype` двух разных функций не равны друг другу:
 
 ~~~
 function getAge() {}
