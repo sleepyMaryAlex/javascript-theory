@@ -823,3 +823,26 @@ chineseDictionary.bye = "再见";
 
 console.log(Object.keys(chineseDictionary)); // ['hello', 'bye']
 ~~~
+
+### Оператор `in`
+
+Оператор `in` возвращает значение `true`, если указанное свойство находится в указанном объекте или его цепочке прототипов.
+
+~~~
+const animal = {
+  eats() {
+    return true;
+  },
+};
+
+const rabbit = Object.create(animal, {
+  jumps: {
+    value: true,
+  },
+});
+
+console.log("jumps" in rabbit); // true
+console.log("eats" in rabbit); // true
+~~~
+
+Название свойства передается как строка.
