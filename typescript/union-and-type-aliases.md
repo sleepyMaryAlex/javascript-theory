@@ -133,3 +133,73 @@ function printPerson(user: Person) {
 printPerson(tom);
 printPerson(bob); // bob представляет Employee, но он также соответствует псевдониму Person
 ~~~
+
+### Только для чтения и необязательные параметры
+
+`readonly` означает, что пользователь или кто-либо другой не может манипулировать этой переменной.
+
+`?` означает, что эти параметры являются необязательными.
+
+~~~
+type User = {
+  readonly id: string;
+  name: string;
+  email: string;
+  dob?: string; // optional
+};
+~~~
+
+### Generic Object Types
+
+~~~
+type Box<Type> = {
+  contents: Type;
+};
+
+const boxA: Box<string> = { contents: "hello" };
+~~~
+
+Поскольку псевдонимы типов, в отличие от интерфейсов, могут описывать больше, чем просто типы объектов, мы также можем использовать их для написания других видов общих вспомогательных типов.
+
+### Подписи индекса
+
+~~~
+type Name = {
+  [index: string]: string;
+}
+
+const fullName: Name = { firstName: "Alex", lastName: "Smith" };
+const firstName = fullName.firstName;
+
+console.log(firstName); // Alex
+~~~
+
+### Модификаторы сопоставления (Mapped Types)
+
+Если вы не хотите повторяться, иногда тип должен быть основан на другом типе.
+
+Есть два дополнительных модификатора, которые можно применять во время сопоставления: `readonly` и `?` которые влияют на изменчивость и необязательность соответственно.
+
+Вы можете удалить или добавить эти модификаторы, добавив префикс `-` или `+`. Если вы не добавите префикс, то `+` предполагается.
+
+~~~
+// Removes 'readonly' attributes from a type's properties
+type CreateMutable<Type> = {
+  -readonly [Property in keyof Type]: Type[Property];
+};
+
+type LockedAccount = {
+  readonly id: string;
+  readonly name: string;
+};
+
+type UnlockedAccount = CreateMutable<LockedAccount>;
+
+const account: UnlockedAccount = { id: "12345", name: "Tom" };
+
+account.name = "Alex";
+~~~
+
+### Краткий справочник
+
+![Type](../images/types.png)
