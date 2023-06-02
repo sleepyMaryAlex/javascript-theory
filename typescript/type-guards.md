@@ -257,3 +257,7 @@ function getArea(shape: Shape) {
   }
 }
 ~~~
+
+### Краткий справочник
+
+![Control flow analysis](../images/control-flow-analysis.png)

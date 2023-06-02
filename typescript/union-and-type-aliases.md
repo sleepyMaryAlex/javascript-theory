@@ -33,6 +33,10 @@ printId(234); // 234
 
 ### Type aliases
 
+Typescript позволяет нам определять наши собственные пользовательские типы, которые мы затем можем использовать в нашем коде.
+
+Один из примеров того, как создавать типы, называется типом псевдонима.
+
 TypeScript позволяет определять псевдонимы типов с помощью ключевого слова `type`:
 
 ~~~
@@ -161,7 +165,11 @@ const boxA: Box<string> = { contents: "hello" };
 
 Поскольку псевдонимы типов, в отличие от интерфейсов, могут описывать больше, чем просто типы объектов, мы также можем использовать их для написания других видов общих вспомогательных типов.
 
-### Подписи индекса
+### Mapped Types
+
+#### Подписи индекса
+
+Сопоставленные типы основаны на синтаксисе сигнатур индексов, которые используются для объявления типов свойств, которые не были объявлены заранее:
 
 ~~~
 type Name = {
@@ -174,7 +182,28 @@ const firstName = fullName.firstName;
 console.log(firstName); // Alex
 ~~~
 
-### Модификаторы сопоставления (Mapped Types)
+Сопоставленный тип — это общий тип, который использует объединение PropertyKeys (часто создается с помощью keyof) для перебора ключей для создания типа:
+
+~~~
+type OptionsFlags<Type> = {
+  [Property in keyof Type]: boolean;
+};
+
+type Features = {
+  darkMode: () => void;
+  newUserProfile: () => void;
+};
+
+type FeatureOptions = OptionsFlags<Features>;
+// type FeatureOptions = {
+//   darkMode: boolean;
+//   newUserProfile: boolean;
+// }
+~~~
+
+В этом примере `OptionsFlags` взяты все свойства из типа `Type` и изменены их значения на логические.
+
+#### Модификаторы сопоставления
 
 Если вы не хотите повторяться, иногда тип должен быть основан на другом типе.
 
@@ -199,6 +228,69 @@ const account: UnlockedAccount = { id: "12345", name: "Tom" };
 
 account.name = "Alex";
 ~~~
+
+#### Key Remapping via `as`
+
+Вы можете повторно сопоставлять ключи в сопоставленных типах с предложением `as` в сопоставленном типе.
+
+Вы можете использовать такие функции, как литеральные типы шаблонов , для создания новых имен свойств из предыдущих:
+
+~~~
+type Getters<Type> = {
+  [Property in keyof Type as `get${Capitalize<string & Property>}`]: () => Type[Property];
+};
+
+interface Person {
+  name: string;
+  age: number;
+  location: string;
+}
+
+type LazyPerson = Getters<Person>;   
+// type LazyPerson = {
+//   getName: () => string;
+//   getAge: () => number;
+//   getLocation: () => string;
+// }
+~~~
+
+Вы можете отображать произвольные объединения, не только объединения `string | number | symbol`, но и объединения любого типа:
+
+~~~
+type EventConfig<Events extends { kind: string }> = {
+  [E in Events as E["kind"]]: (event: E) => void;
+};
+
+type SquareEvent = { kind: "square"; x: number; y: number };
+type CircleEvent = { kind: "circle"; radius: number };
+
+type Config = EventConfig<SquareEvent | CircleEvent>;
+// type Config = {
+//   square: (event: SquareEvent) => void;
+//   circle: (event: CircleEvent) => void;
+// }
+~~~
+
+Например, вот сопоставленный тип, использующий условный тип, который возвращает либо `true`, либо `false` в зависимости от того, имеет ли объект свойство `pii`, установленное на литерал `true`:
+
+~~~
+type ExtractPII<Type> = {
+  [Property in keyof Type]: Type[Property] extends { pii: true } ? true : false;
+};
+
+type DBFields = {
+  id: { format: "incrementing" };
+  name: { type: string; pii: true };
+};
+
+type ObjectsNeedingGDPRDeletion = ExtractPII<DBFields>;
+// type ObjectsNeedingGDPRDeletion = {
+//   id: false;
+//   name: true;
+// };
+~~~
+
+Когда тип слева от `extends` можно присвоить типу справа, вы получите тип в первой ветви (`«true»` ветви); в противном случае вы получите тип в последней ветке (`«false»` ветке).
 
 ### Краткий справочник
 
