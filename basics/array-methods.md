@@ -253,6 +253,8 @@ const array = [date, 'good morning'];
 console.log(array.toLocaleString()); // 9/21/2022, 10:33:08 AM,good morning
 ~~~
 
+> Методы `push`, `shift`, `unshift`, `pop`, `reverse`, `splice`, `sort`, `copyWithin`, `fill` мутируют массив!
+
 ### Array properties
 
 Массив имеет несколько свойств, например arguments, length и другие.
