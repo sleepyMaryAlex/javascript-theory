@@ -55,9 +55,9 @@ let sym: symbol = Symbol("key");
 
 ~~~
 declare const sym1: unique symbol;
- 
+
 const sym2: unique symbol = Symbol();
- 
+
 let sym3: typeof sym1 = sym1;
 
 class C {

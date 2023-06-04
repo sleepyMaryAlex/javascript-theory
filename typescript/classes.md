@@ -268,7 +268,7 @@ d.move();
 d.woof(3);
 ~~~
 
-#### Overriding Methods
+#### Overriding methods
 
 Производный класс также может переопределять поле или свойство базового класса:
 
@@ -315,7 +315,7 @@ class Derived extends Base {
 }
 ~~~
 
-#### Type-only Field Declarations
+#### Type-only field declarations
 
 Когда `target >= ES2022` или `useDefineForClassFields` имеет значение `true`, поля класса инициализируются после завершения конструктора родительского класса, перезаписывая любое значение, установленное родительским классом. Это может быть проблемой, когда вы хотите только повторно объявить более точный тип для унаследованного поля. Чтобы обработать эти случаи, вы можете написать `declare`, чтобы указать TypeScript, что для этого объявления поля не должно быть никакого эффекта во время выполнения.
 
@@ -366,6 +366,34 @@ g.greet();
 
 Поскольку `public` это уже модификатор видимости по умолчанию, вам никогда не нужно писать его для члена класса, но вы можете сделать это из соображений стиля/удобочитаемости.
 
+##### Constructor assignment
+
+В примере ниже мы можем упростить параметры нашего конструктора, объединив объявление и присваивание в один оператор:
+
+~~~
+class Person {
+  age: number;
+  constructor(public firstName: string, public lastName: string, age: number) {
+    this.age = age;
+  }
+
+  sayHello() {
+    console.log(`Hello, my name is ${this.firstName} ${this.lastName}!`);
+  }
+
+  addOneYear() {
+    this.age = this.age + 1;
+  }
+}
+
+const cory = new Person("Cory", "Rylan", 100);
+cory.sayHello(); // Hello, my name is Cory Rylan!
+cory.addOneYear();
+console.log(cory.age); // 101
+~~~
+
+Мы можем добавить перед параметрами конструктора ключевое слово `public` или `private`, чтобы TypeScript автоматически назначал параметр как свойство класса. В этом примере это удаляет ненужное объявление и присвоение как `firstName`, так и `lastName`.
+
 #### `protected`
 
 Члены `protected` видны только подклассам того класса, в котором они объявлены.
@@ -395,6 +423,7 @@ g.getName();
 class Base {
   protected m = 10;
 }
+
 class Derived extends Base {
   // No modifier, so default is 'public'
   m = 15;
@@ -460,6 +489,89 @@ class A {
     return other.x === this.x;
   }
 }
+~~~
+
+#### Constructor assignment: `public`, `protected` and `private` keywords
+
+Как обсуждалось выше, TypeScript включает краткий способ создания и назначения свойства экземпляра класса из параметра конструктора.
+
+То есть, вместо этого:
+
+~~~
+class TestClass {
+  private name: string;
+
+  constructor(name: string) {
+    this.name = name;
+  }
+
+  sayHello() {
+    console.log(`Hello, ${this.name}`);
+  }
+}
+
+const tom = new TestClass("Tom");
+tom.sayHello(); // Hello, Tom
+console.log(tom.name); // Property 'name' is private and only accessible within class 'TestClass'.
+~~~
+
+...можно использовать ключевое слово `private`:
+
+~~~
+class TestClass {
+  constructor(private name: string) {}
+  
+  sayHello() {
+    console.log(`Hello, ${this.name}`);
+  }
+}
+
+const tom = new TestClass("Tom");
+tom.sayHello(); // Hello, Tom
+console.log(tom.name); // Property 'name' is private and only accessible within class 'TestClass'.
+~~~
+
+И оба они будут перенесены из TypeScript (время разработки и время компиляции) в JavaScript с тем же результатом, но с написанием значительно меньшего количества кода:
+
+~~~
+class TestClass {
+    name;
+    constructor(name) {
+        this.name = name;
+    }
+    sayHello() {
+        console.log(`Hello, ${this.name}`);
+    }
+}
+~~~
+
+Ключевое слово `public` работает таким же образом, но также указывает компилятору TypeScript, что можно получить доступ к свойству извне класса.
+
+~~~
+class TestClass {
+  constructor(public name: string) {}
+}
+
+const tom = new TestClass("Tom");
+console.log(tom.name); // Tom
+~~~
+
+Пример с `protected`:
+
+~~~
+class Greeter {
+  constructor(protected name = "Tom") {}
+}
+
+class SpecialGreeter extends Greeter {
+  howdy() {
+    console.log(`Howdy, ${this.name}`);
+  }
+}
+
+const tom = new SpecialGreeter();
+tom.howdy(); // Howdy, Tom
+console.log(tom.name); // Property 'name' is protected and only accessible within class 'Greeter' and its subclasses.
 ~~~
 
 #### Предостережения
@@ -969,11 +1081,6 @@ fn(window);
 fn({});
 fn(fn);
 ~~~
-
-
-
-
-
 
 ### Краткий справочник
 
