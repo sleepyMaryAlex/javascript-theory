@@ -122,26 +122,23 @@ require.js
 
 index.js
 ~~~
-(function(global, factory) {
-  typeof exports === 'object' 
-  && typeof module !== 'undefined' 
-  ? factory(exports) :
-    typeof define === 'function' 
-    && define.amd 
-    ? define(['exports'], factory) :
-      (factory(
-          (global.mymodule = global.mymodule || {})
-        )
-      );
-}(this, function(exports) {
-  'use strict';
+(function (global, factory) {
+  if (typeof exports === "object" && typeof module !== "undefined") {
+    factory(exports);
+  } else if (typeof define === "function" && define.amd) {
+    define(["exports"], factory);
+  } else {
+    factory(global.mymodule = global.mymodule || {});
+  }
+})(this, function (exports) {
+  "use strict";
 
   function myFunction() {
-    console.log('hello world');
+    console.log("Hello world");
   }
   // expose the inner function on the module to use it
   exports.myFunction = myFunction;
-}));
+});
 ~~~
 
 Вы можете вызвать этот метод в своем `.html` файле как:

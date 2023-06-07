@@ -321,7 +321,22 @@ eat(); // undefined
 
 Код внутри тела класса всегда выполняется в строгом режиме.
 
-Сравнение class и object:
+`this` в конструкторе:
+
+~~~
+class Animal {
+  constructor(name) {
+    this.name = name;
+    console.log(this); // Animal {name: 'Rabbit'}
+  }
+}
+
+const rabbit = new Animal("Rabbit");
+~~~
+
+`this` в конструкторе указывает на создаваемый экземпляр.
+
+Сравнение `class` и `object`:
 
 ~~~
 const user = {
