@@ -8,12 +8,12 @@ _Колбэк-функция (или обратный вызов)_ - это фу
 function calculate(x, y, operation) {
   if (operation === "add") {
     return x + y;
-  } else if (operation === "substract") {
+  } else if (operation === "subtract") {
     return x - y;
   }
 }
 
-console.log(calculate(10, 3, "substract")); // 7
+console.log(calculate(10, 3, "subtract")); // 7
 ~~~
 
 Функция с колбэком (более понятная):
@@ -23,7 +23,7 @@ function add(x, y) {
   return x + y;
 }
 
-function substract(x, y) {
+function subtract(x, y) {
   return x - y;
 }
 
@@ -31,7 +31,7 @@ function calculate(x, y, callback) {
   return callback(x, y);
 }
 
-console.log(calculate(10, 3, substract)); // 7
+console.log(calculate(10, 3, subtract)); // 7
 ~~~
 
 ### Callback pattern
