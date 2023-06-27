@@ -3,6 +3,7 @@
 Вы можете определять функции JavaScript разными способами.
 
 Первый способ — __function declaration__:
+
 ~~~
 function greet(who) {
   return `Hello, ${who}!`;
@@ -10,6 +11,7 @@ function greet(who) {
 ~~~
 
 Второй способ — __function expression__:
+
 ~~~
 const greet = function(who) {
   return `Hello, ${who}`;
@@ -56,7 +58,7 @@ const myObject = {
 myObject.method(); // myObject
 ~~~
 
-3. Во время непрямого вызова с использованием ```myFunc.call(thisVal, arg1, ..., argN)``` или ```myFunc.apply(thisVal, [arg1, ..., argN])``` значение this равно первому аргументу:
+3. Во время непрямого вызова с использованием `myFunc.call(thisVal, arg1, ..., argN)` или `myFunc.apply(thisVal, [arg1, ..., argN])` значение this равно первому аргументу:
 
 ~~~
 function myFunction() {
@@ -132,6 +134,7 @@ const redCar = new Car('red'); // TypeError: Car is not a constructor
 __Function declaration & function expression__
 
 Внутри тела function declaration и function expression _arguments_ — это специальный массивоподобный объект, содержащий список аргументов, с которыми была вызвана функция.
+
 ~~~
 function myFunction() {
   console.log(arguments);
@@ -161,6 +164,7 @@ myRegularFunction('a', 'b'); // { 0: 'a', 1: 'b' }
 __Function declaration & function expression__
 
 Если return отсутствует или после оператора return нет выражения, function declaration и function expression неявно возвращает `undefined`:
+
 ~~~
 function myEmptyFunction() {
   42;
@@ -187,6 +191,7 @@ console.log(increment(41)); // => 42
 __Function declaration & function expression__
 
 В следующем классе `Hero` метод `logName()` определяется с помощью function declaration:
+
 ~~~
 class Hero {
   constructor(heroName) {
@@ -203,6 +208,7 @@ batman.logName(); // Batman
 
 Обычно обычные функции в качестве методов — это то, что нужно.
 Иногда вам нужно указать метод в качестве обратного вызова, например, для `setTimeout()` или прослушивателя событий. В таких случаях вы можете столкнуться с трудностями при доступе к этому значению.
+
 ~~~
 class Hero {
   constructor(heroName) {
@@ -218,13 +224,15 @@ setTimeout(batman.logName, 1000);
 ~~~
 
 Привяжем к нужному контексту вручную:
-```setTimeout(batman.logName.bind(batman), 1000);```
+
+`setTimeout(batman.logName.bind(batman), 1000);`
 
 Но есть лучший способ: стрелка работает как поле класса.
 
 __Arrow function__
 
 Метод, определенный с помощью стрелки, лексически связывает `this` с экземпляром класса.
+
 ~~~
 class Hero {
   constructor(heroName) {
@@ -252,6 +260,7 @@ _Function expression_ — это когда вы создаете функцию
 * Function expression могут использоваться в качестве аргумента другой функции, но function declaration — нет.
 * Function expression могут быть анонимными, а function declaration — нет.
 * Function expression можно использовать как IIFE.
+
 ~~~
 const greeting = "Hello world"; 
 (function () {
@@ -260,6 +269,7 @@ const greeting = "Hello world";
 ~~~
 
 В некоторых случаях лучше использовать function expression:
+
 ~~~
 'use strict';
 const age = 20;
