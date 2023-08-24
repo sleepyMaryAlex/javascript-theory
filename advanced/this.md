@@ -452,3 +452,23 @@ console.log(numbers.sum());
 ~~~
 
 Функция `calculate` определена внутри `sum`, поэтому вы можете ожидать, что `this` — это объект numbers и в `calculate()`. Тем не менее, `calculate()` — это вызов функции, а не метода, и поэтому его `this` — это глобальный объект `window` или `undefined` в `strict mode`. Даже если контекстом внешней функции sum является объект numbers, у него здесь нет власти.
+
+***
+
+~~~
+class GODListener {
+  constructor() {
+    this.counter = 0;
+  }
+  handleClick() {
+    this.counter += 1;
+    console.log(this.counter);
+  }
+}
+
+const div = document.querySelector(".div");
+const listener = new GODListener();
+div.addEventListener("click", listener.handleClick);
+
+// NaN NaN NaN
+~~~
